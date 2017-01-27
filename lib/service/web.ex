@@ -50,6 +50,9 @@ defmodule Service.Web do
   end
 
   defp token do
-    Application.fetch_env!(:service, :token)
+    Application.fetch_env!(:service, :token) |> to_token
   end
+
+  defp to_token(value) when is_binary(value), do: value
+  defp to_token({:system, env_var}), do: to_token(System.get_env(env_var))
 end
