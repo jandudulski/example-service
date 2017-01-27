@@ -48,6 +48,6 @@ defmodule Service.Web do
   end
 
   defp token do
-    Application.get_env(:service, :token)
+    Application.fetch_env!(:service, :token)
   end
 end
