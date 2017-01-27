@@ -14,7 +14,7 @@ defmodule Service.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :cowboy, :plug],
+    [applications: [:logger, :cowboy, :plug, :poison],
      mod: {Service, []},
      env: [example: "application value"]]
   end
