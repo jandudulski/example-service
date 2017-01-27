@@ -9,8 +9,6 @@ defmodule Service.Web do
   plug :match
   plug :dispatch
 
-  @token Application.get_env(:service, :token)
-
   get "/" do
     conn
     |> send_json_resp(200, %{ status: "ok", token: conn.assigns.token })
@@ -30,9 +28,10 @@ defmodule Service.Web do
   end
 
   defp verify_auth_header(conn, _opts) do
-    case get_auth_header(conn) do
-      @token -> conn |> assign(:token, @token)
-      _ -> conn |> send_json_resp(401, %{ status: "Incorrect token" }) |> halt
+    if get_auth_header(conn) == token do
+      conn |> assign(:token, token)
+    else
+      conn |> send_json_resp(401, %{ status: "Incorrect token" }) |> halt
     end
   end
 
@@ -46,5 +45,9 @@ defmodule Service.Web do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(status, Poison.encode!(body))
+  end
+
+  defp token do
+    Application.get_env(:service, :token)
   end
 end
