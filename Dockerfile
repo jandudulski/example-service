@@ -38,4 +38,4 @@ RUN tar -xzf app.tar.gz
 RUN rm -rf /var/cache/apk/*
 RUN rm -rf /usr/src/app
 
-CMD ["/opt/app/bin/app", "foreground"]
+CMD ["/opt/app/bin/service", "foreground"]
