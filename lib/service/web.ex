@@ -31,6 +31,8 @@ defmodule Service.Web do
     if get_auth_header(conn) == token do
       conn |> assign(:token, token)
     else
+      Logger.info "token: #{token}"
+      Logger.info "send: #{get_auth_header(conn)}"
       conn |> send_json_resp(401, %{ status: "Incorrect token" }) |> halt
     end
   end
